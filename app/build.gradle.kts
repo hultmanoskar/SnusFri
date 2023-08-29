@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.ogge.snusfri"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.ogge.snusfri"
@@ -50,6 +50,10 @@ android {
 }
 
 dependencies {
+
+    val nav_version = "2.7.1"
+
+    implementation ("androidx.navigation:navigation-compose:2.5.3")
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")

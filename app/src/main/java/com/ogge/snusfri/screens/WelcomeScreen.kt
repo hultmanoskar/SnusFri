@@ -1,9 +1,7 @@
-package com.ogge.snusfri
+package com.ogge.snusfri.screens
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -16,9 +14,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.DrawScope
@@ -28,16 +23,14 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ogge.snusfri.ui.theme.HotPink
+import androidx.navigation.NavController
 import com.ogge.snusfri.ui.theme.Mint
 import com.ogge.snusfri.ui.theme.Mint2
-import com.ogge.snusfri.ui.theme.TiffanyBlue
-import java.lang.Math.sin
 import kotlin.math.sin
 
 
 @Composable
-fun WelcomeScreen(onGetStartedClick: () -> Unit) {
+fun WelcomeScreen(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -70,7 +63,11 @@ fun WelcomeScreen(onGetStartedClick: () -> Unit) {
 
         Spacer(modifier = Modifier.weight(1f))
         Button(
-            onClick = onGetStartedClick,
+            onClick = {
+                println("Btn click!")
+                navController.navigate("inputscreen2")
+                println("Btn click2!")
+            },
             colors = ButtonDefaults.buttonColors(Mint2),
             modifier = Modifier
                 .align(Alignment.End)

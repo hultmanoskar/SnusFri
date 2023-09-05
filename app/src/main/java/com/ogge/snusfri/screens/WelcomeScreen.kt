@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.ogge.snusfri.ui.theme.Mint
 import com.ogge.snusfri.ui.theme.Mint2
+import com.ogge.snusfri.ui.theme.Purple40
 import kotlin.math.sin
 
 
@@ -42,7 +43,7 @@ fun WelcomeScreen(navController: NavController) {
             style = TextStyle(
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Bold,
-                color = Mint2
+                color = Purple40
             )
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -66,9 +67,9 @@ fun WelcomeScreen(navController: NavController) {
             onClick = {
                 println("Btn click!")
                 navController.navigate("inputscreen2")
-                println("Btn click2!")
+
             },
-            colors = ButtonDefaults.buttonColors(Mint2),
+            colors = ButtonDefaults.buttonColors(Purple40),
             modifier = Modifier
                 .align(Alignment.End)
                 .padding(20.dp)

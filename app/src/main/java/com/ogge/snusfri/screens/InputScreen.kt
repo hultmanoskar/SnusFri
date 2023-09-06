@@ -1,6 +1,9 @@
 package com.ogge.snusfri.screens
 
 import android.app.DatePickerDialog
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,6 +18,7 @@ import androidx.compose.material3.ButtonDefaults
 
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CardElevation
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
@@ -24,15 +28,23 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.Bottom
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.InspectableModifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.ogge.snusfri.navigation.NavigationScreens
+import com.ogge.snusfri.ui.theme.Pink40
+import com.ogge.snusfri.ui.theme.Pink80
 import com.ogge.snusfri.ui.theme.Purple40
+import com.ogge.snusfri.ui.theme.PurpleGrey40
+import com.ogge.snusfri.ui.theme.PurpleGrey80
 import java.util.Calendar
 import kotlin.math.roundToInt
 
@@ -43,10 +55,6 @@ fun StartDateInput(navController: NavController, snusUsage: Float, pricePerDosa:
     val context = LocalContext.current
 
     val navBackStackEntry = navController.currentBackStackEntry
-    val snusUsagePerWeek =
-        navBackStackEntry?.arguments?.getFloat("snusUsagePerWeek") ?: 0f
-    val pricePerDosa =
-        navBackStackEntry?.arguments?.getFloat("pricePerDosa") ?: 0f
 
 
     var isDatePickerVisible by remember { mutableStateOf(false) }
@@ -58,19 +66,16 @@ fun StartDateInput(navController: NavController, snusUsage: Float, pricePerDosa:
         contentAlignment = Alignment.Center
     ){
         Column(modifier = Modifier, verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(text = "När ska du sluta snusa?", fontSize = 22.sp, fontWeight = FontWeight.SemiBold,
-            )
-            Text(text = "Dosor per vecka: ${snusUsage.toInt()} + kr per dosa: $pricePerDosa")
             Card(
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.onPrimary,
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(20.dp)
                     .height(200.dp),
                 elevation = CardDefaults.cardElevation(
-                    defaultElevation = 10.dp,
+                    defaultElevation = 10.dp, hoveredElevation = 80.dp
                 )
             ){
                 Column(
@@ -123,18 +128,38 @@ fun StartDateInput(navController: NavController, snusUsage: Float, pricePerDosa:
                             selectedDate.value.get(Calendar.DAY_OF_MONTH)
                         ).show()
                     }
+
+                }
+
+            }
+            Spacer(modifier = Modifier.height(40.dp))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp),
+                horizontalArrangement = Arrangement.End
+            ) {
+                Button(
+                    onClick = {
+                        println("Gå vidare BTN pressed")
+                        navController.navigate("${NavigationScreens.MainScreen}/$snusUsage/$pricePerDosa")
+                    },
+                    modifier = Modifier.padding(4.dp)
+                ) {
+                    Text(
+                        text = "Gå vidare",
+                        fontSize = 18.sp,
+                        modifier = Modifier.padding(8.dp)
+                    )
                 }
             }
-
-
         }
-
     }
         }
 
 
 @Composable
-fun InputScreen2(navController: NavController) {
+fun SnusConsumption(navController: NavController) {
     var snusUsage by remember { mutableStateOf(1f) }
     var pricePerDosa by remember { mutableStateOf(10f) }
 
@@ -150,9 +175,6 @@ fun InputScreen2(navController: NavController) {
                 .padding(16.dp)
         ) {
             Card(
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.onPrimary,
-                ),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
@@ -163,7 +185,7 @@ fun InputScreen2(navController: NavController) {
             ) {
                 Column(
                     modifier = Modifier
-                        .fillMaxSize()
+                        .fillMaxSize().background(PurpleGrey80)
                         .padding(16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -179,7 +201,7 @@ fun InputScreen2(navController: NavController) {
                         text = "Antal dosor: ",
                         style = TextStyle(
                             fontSize = 18.sp,
-                            fontWeight = FontWeight.SemiBold
+                            fontWeight = FontWeight.SemiBold,
                         )
                     )
                     Text(
@@ -191,6 +213,7 @@ fun InputScreen2(navController: NavController) {
                     )
                 }
             }
+
             Spacer(modifier = Modifier.height(10.dp))
 
             Card(
@@ -201,9 +224,7 @@ fun InputScreen2(navController: NavController) {
                     .fillMaxWidth()
                     .padding(16.dp)
                     .height(200.dp),
-                elevation = CardDefaults.cardElevation(
-                    defaultElevation = 10.dp,
-                )
+                elevation = CardDefaults.elevatedCardElevation(defaultElevation = 10.dp)
             ) {
                 Column(
                     modifier = Modifier
@@ -243,7 +264,7 @@ fun InputScreen2(navController: NavController) {
                 onClick = {
                     println("Gå vidare BTN pressed")
                     /*TODO*/
-                    navController.navigate("${NavigationScreens.StarDateInput}/$snusUsage/$pricePerDosa")
+                    navController.navigate("${NavigationScreens.StartDateInput}/$snusUsage/$pricePerDosa")
                 },
                 colors = ButtonDefaults.buttonColors(Purple40),
                 modifier = Modifier
@@ -305,3 +326,4 @@ fun PricePerDosaSlider(
 
     )
 }
+

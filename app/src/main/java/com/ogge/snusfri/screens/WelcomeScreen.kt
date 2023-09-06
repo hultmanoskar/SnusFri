@@ -2,6 +2,7 @@ package com.ogge.snusfri.screens
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -26,18 +27,23 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.ogge.snusfri.ui.theme.Mint
 import com.ogge.snusfri.ui.theme.Mint2
+import com.ogge.snusfri.ui.theme.Pink80
 import com.ogge.snusfri.ui.theme.Purple40
+import com.ogge.snusfri.ui.theme.PurpleGrey40
+import com.ogge.snusfri.ui.theme.PurpleGrey80
 import kotlin.math.sin
 
 
 @Composable
 fun WelcomeScreen(navController: NavController) {
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Spacer(modifier = Modifier.height(20.dp))
         Text(
             text = "SnusFri",
             style = TextStyle(
@@ -46,7 +52,7 @@ fun WelcomeScreen(navController: NavController) {
                 color = Purple40
             )
         )
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(10.dp))
         Text(
             text = "Börja din resa idag",
             style = TextStyle(
@@ -66,7 +72,7 @@ fun WelcomeScreen(navController: NavController) {
         Button(
             onClick = {
                 println("Btn click!")
-                navController.navigate("inputscreen2")
+                navController.navigate("snusconsumption")
 
             },
             colors = ButtonDefaults.buttonColors(Purple40),
